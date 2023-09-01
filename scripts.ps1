@@ -50,12 +50,12 @@ $apiUrl = "https://apigee.googleapis.com/v1/organizations/esi-apigee-x-394004/en
 
 # Define the KVM entry data (key and value)
 $kvmData = @{
-    "name": "github-kvm",
-    "encrypted": true,
+    "name"= "github-kvm",
+    "encrypted"=true,
     "entry": [
     {
-      "key": "github",
-      "value": "github.com"
+      "key"="github",
+      "value"= "github.com"
     },
   ]
 } | ConvertTo-Json
