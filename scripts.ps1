@@ -34,11 +34,12 @@ foreach ($jsonFile in $jsonFiles) {
     $headers.Add("Authorization", "Bearer $token")
     $headers.Add("Content-Type", "application/json")
 
-    $body = @"
-    {
+    $body ={
         "name": "$kvmName",
         "encrypted": true  # Set to false if you don't want encryption
-    }
+        }
+
+    Write-Host $body
 "@
 
     $response = Invoke-RestMethod 'https://apigee.googleapis.com/v1/organizations/esi-apigee-x-394004/environments/eval/keyvaluemaps' -Method 'POST' -Headers $headers -Body $body
