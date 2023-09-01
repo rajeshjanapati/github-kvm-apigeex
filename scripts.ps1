@@ -26,7 +26,12 @@ foreach ($jsonFile in $jsonFiles) {
         "Authorization" = "Bearer $token"
         "Content-Type" = "application/json"
     }
-    Write-Host $jsonContent
+    
+    $jsonData = ConvertFrom-Json $jsonContent
+    Write-Host $jsonData
+    foreach ($name in $jsonData) {
+        Write-Host $name
+    }
 
 #     $kvmData = $jsonContent | ConvertFrom-Json
 #     Write-Host $kvmData
