@@ -26,12 +26,12 @@ foreach ($jsonFile in $jsonFiles) {
         "Authorization" = "Bearer $token"
         "Content-Type" = "application/json"
     }
-
+    $id = "true"
      # Use the JSON data as the KVM name and create the KVM
     $kvmName = $jsonData.name  # Assuming "name" is the key in your JSON
     $body = @{
         "name" = $kvmName,
-        "encrypted" = true  # Set to $false if you don't want encryption
+        "encrypted" = $id  # Set to $false if you don't want encryption
     } | ConvertTo-Json
 
     $response = Invoke-RestMethod -Uri $apiUrl -Method Post -Headers $headers -Body $body
