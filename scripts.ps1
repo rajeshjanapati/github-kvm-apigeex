@@ -26,7 +26,7 @@ foreach ($jsonFile in $jsonFiles) {
         "Content-Type" = "application/json"
     }
 
-    $response = Invoke-RestMethod -Uri $apiUrl -Method Post -Headers $headers -Body $jsonContent
+    $response = Invoke-RestMethod -Uri $apiUrl -Method:Post -Headers $headers -Body $jsonContent
 
     Write-Host "File $($jsonFile.Name) uploaded. Response: $($response | ConvertTo-Json -Depth 2)"
 }
