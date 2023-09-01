@@ -30,7 +30,7 @@ foreach ($jsonFile in $jsonFiles) {
     $kvmName = $jsonData.name  # Assuming "name" is the key in your JSON
     $body = @{
         "name" = $kvmName
-        `"encrypted`":`"true`"
+        `"encrypted`"=`"true`"
     } | ConvertTo-Json
 
     $response = Invoke-RestMethod -Uri $apiUrl -Method Post -Headers $headers -Body $body
