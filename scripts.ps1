@@ -19,27 +19,27 @@ $jsonFiles = Get-ChildItem -Filter *.json -Recurse
 
 # Loop through each JSON file and make POST requests
 foreach ($jsonFile in $jsonFiles) {
-    Write-Host "entered into foreach..."
-    $jsonContent = Get-Content -Path $jsonFile -Raw
-    
-     # Use the JSON data as the KVM name and create the KVM
-    $kvmName = $jsonData.name  # Assuming "name" is the key in your JSON
+  
+  Write-Host "entered into foreach..."
+  $jsonContent = Get-Content -Path $jsonFile -Raw
+  
+   # Use the JSON data as the KVM name and create the KVM
+  $kvmName = $jsonData.name  # Assuming "name" is the key in your JSON
+  }
+$headers = New-Object "System.Collections.Generic.Dictionary[[String],[String]]"
+$headers.Add("Authorization", "Bearer ya29.a0AfB_byBVRRWv3j120nTXVXah3wvqwIpBIGNguhajsUiE87R496vX-zJEJrL3ZLCcGyBkxL5Ynuu61HEwz9nn6_evRSewYFWQT3gi4mrocvzdmo8odRtPVYeFMgXVk7lerSLLom8dDkKCWJCRcNq7yKKM_kIgl_JUZv_USetE1bmNWUwaCgYKAZQSARESFQHsvYlsDh3J5BDbCEj488voROYSPA0182")
+$headers.Add("Content-Type", "application/json")
 
-    $headers = New-Object "System.Collections.Generic.Dictionary[[String],[String]]"
-    $headers.Add("Authorization", "Bearer ya29.a0AfB_byBVRRWv3j120nTXVXah3wvqwIpBIGNguhajsUiE87R496vX-zJEJrL3ZLCcGyBkxL5Ynuu61HEwz9nn6_evRSewYFWQT3gi4mrocvzdmo8odRtPVYeFMgXVk7lerSLLom8dDkKCWJCRcNq7yKKM_kIgl_JUZv_USetE1bmNWUwaCgYKAZQSARESFQHsvYlsDh3J5BDbCEj488voROYSPA0182")
-    $headers.Add("Content-Type", "application/json")
-    
-    $body = @"
-    {
-        `"name`":`"test-pst22`",
-        `"encrypted`":`"true`"
-    }
-    "@
-    
-    $response = Invoke-RestMethod 'https://apigee.googleapis.com/v1/organizations/esi-apigee-x-394004/environments/eval/keyvaluemaps' -Method 'POST' -Headers $headers -Body $body
-    $response | ConvertTo-Json
-    
-    }
+$body = @"
+{
+    `"name`":`"test-pst11`",
+    `"encrypted`":`"true`"
+}
+"@
+
+$response = Invoke-RestMethod 'https://apigee.googleapis.com/v1/organizations/esi-apigee-x-394004/environments/eval/keyvaluemaps' -Method 'POST' -Headers $headers -Body $body
+$response | ConvertTo-Json
+  
     
     # $jsonData = ConvertFrom-Json $jsonContent
     # Write-Host $jsonData
