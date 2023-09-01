@@ -1,11 +1,11 @@
 {
   "entry": [
     {
-      "name": "COMPANY",
+      "key": "COMPANY",
       "value": "example.com"
     },
     {
-      "name": "PREFIX",
+      "key": "PREFIX",
       "value": "EXMPL"
     }
   ],
