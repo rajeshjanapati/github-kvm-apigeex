@@ -26,8 +26,11 @@ foreach ($jsonFile in $jsonFiles) {
         "Authorization" = "Bearer $token"
         "Content-Type" = "application/json"
     }
+    $body = @"
+    {`"name`":`"postman-KVM`",`"encrypted`": true}
+    "@
     Write-Host $jsonContent
-    $response = Invoke-RestMethod -Uri $apiUrl -Method:Post -Headers $headers -Body $jsonContent
+    $response = Invoke-RestMethod -Uri $apiUrl -Method:Post -Headers $headers -Body $body
 
     Write-Host "File $($jsonFile.Name) uploaded. Response: $($response | ConvertTo-Json -Depth 2)"
 }
