@@ -32,14 +32,13 @@ foreach ($jsonFile in $jsonFiles) {
     foreach ($name in $($jsonData)) {
         Write-Host $name
         $kvmcreatepath =  'https://apigee.googleapis.com/v1/organizations/esi-apigee-x-394004/environments/eval/keyvaluemaps'
-        $body = @"
-        {
+        $body = @"{
             `"name`":$name,
             `"encrypted`":`"true`"
-        }
-        "@
+        }"@
         $kvmcreate = Invoke-RestMethod $kvmcreatepath -Method 'POST' -Headers $headers -Body $body
         Write-Host $kvmcreate
+    }
     }
 
 #     $kvmData = $jsonContent | ConvertFrom-Json
