@@ -37,7 +37,7 @@ foreach ($jsonFile in $jsonFiles) {
             "encrypted" = "false"
             "entry" = $value
         } | ConvertTo-Json
-    $baseUrl = "https://api.enterprise.apigee.com/v1/organizations/$org/environments/$env/keyvaluemaps"
+    $baseUrl = "https://api.enterprise.apigee.com/v1/organizations/esi-apigee-x-394004/environments/eval/keyvaluemaps"
 
     $kvmUrl = $baseUrl+$key+"/entries"
     Invoke-RestMethod -Uri $kvmUrl -Method Post -Headers $headers -Body $kvmEntry
