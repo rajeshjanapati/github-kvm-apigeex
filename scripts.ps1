@@ -30,21 +30,22 @@ foreach ($jsonFile in $jsonFiles) {
   
   # Print the extracted value
   Write-Host $kvmName
+  $headers = New-Object "System.Collections.Generic.Dictionary[[String],[String]]"
+  $headers.Add("Authorization", "Bearer ya29.a0AfB_byBVRRWv3j120nTXVXah3wvqwIpBIGNguhajsUiE87R496vX-zJEJrL3ZLCcGyBkxL5Ynuu61HEwz9nn6_evRSewYFWQT3gi4mrocvzdmo8odRtPVYeFMgXVk7lerSLLom8dDkKCWJCRcNq7yKKM_kIgl_JUZv_USetE1bmNWUwaCgYKAZQSARESFQHsvYlsDh3J5BDbCEj488voROYSPA0182")
+  $headers.Add("Content-Type", "application/json")
+  
+  $body = @"
+  {
+      `"name`":$kvmName,
+      `"encrypted`":`"true`"
+  }
+  "@
+  
+  $response = Invoke-RestMethod 'https://apigee.googleapis.com/v1/organizations/esi-apigee-x-394004/environments/eval/keyvaluemaps' -Method 'POST' -Headers $headers -Body $body
+  $response | ConvertTo-Json
 
   }
-$headers = New-Object "System.Collections.Generic.Dictionary[[String],[String]]"
-$headers.Add("Authorization", "Bearer ya29.a0AfB_byBVRRWv3j120nTXVXah3wvqwIpBIGNguhajsUiE87R496vX-zJEJrL3ZLCcGyBkxL5Ynuu61HEwz9nn6_evRSewYFWQT3gi4mrocvzdmo8odRtPVYeFMgXVk7lerSLLom8dDkKCWJCRcNq7yKKM_kIgl_JUZv_USetE1bmNWUwaCgYKAZQSARESFQHsvYlsDh3J5BDbCEj488voROYSPA0182")
-$headers.Add("Content-Type", "application/json")
 
-$body = @"
-{
-    `"name`":`"test-pst321`",
-    `"encrypted`":`"true`"
-}
-"@
-
-$response = Invoke-RestMethod 'https://apigee.googleapis.com/v1/organizations/esi-apigee-x-394004/environments/eval/keyvaluemaps' -Method 'POST' -Headers $headers -Body $body
-$response | ConvertTo-Json
   
     
     # $jsonData = ConvertFrom-Json $jsonContent
