@@ -1,8 +1,8 @@
 # write-output Apigee Artifacts
 $token = $env:TOKEN
 $org = $env:ORG
-$baseURL = "https://apigee.googleapis.com/v1/organizations/"
-$headers = @{Authorization = "Bearer $token"}
+# $baseURL = "https://apigee.googleapis.com/v1/organizations/"
+# $headers = @{Authorization = "Bearer $token"}
 
 # Set your GitHub repository information
 $repositoryOwner = "rajeshjanapati@gmail.com"
@@ -46,12 +46,18 @@ $jsonFiles = Get-ChildItem -Filter *.json -Recurse
 # }
 
 # Define the API endpoint
-$apiUrl = "https://apigee.googleapis.com/v1/organizations/esi-apigee-x-394004/environments/eval/keyvaluemaps/github-te/entries"
+$apiUrl = "https://apigee.googleapis.com/v1/organizations/esi-apigee-x-394004/environments/eval/keyvaluemaps"
 
 # Define the KVM entry data (key and value)
 $kvmData = @{
-    "key" = "github-test"
-    "value" = "1234"
+    "name": "github-kvm",
+    "encrypted": true,
+    "entry": [
+    {
+      "key": "github",
+      "value": "github.com"
+    },
+  ]
 } | ConvertTo-Json
 
 # Set up the request headers
