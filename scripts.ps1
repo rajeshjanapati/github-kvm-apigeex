@@ -52,7 +52,7 @@ $apiUrl = "https://apigee.googleapis.com/v1/organizations/esi-apigee-x-394004/en
 $kvmData = @{
     "key" = "github-test"
     "value" = "1234"
-} | -Raw
+}
 
 # Set up the request headers
 $headers = @{
