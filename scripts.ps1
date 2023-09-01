@@ -26,7 +26,6 @@ foreach ($jsonFile in $jsonFiles) {
         "Authorization" = "Bearer $token"
         "Content-Type" = "application/json"
     }
-    $encrypted = $true.ToString()
      # Use the JSON data as the KVM name and create the KVM
     $kvmName = $jsonData.name  # Assuming "name" is the key in your JSON
     $body = @{
