@@ -14,14 +14,11 @@ git clone https://github.com/rajeshjanapati/github-kvm-apigeex.git
 cd $repositoryName
 cd kvms
 
-
+# Read JSON files
+$jsonFiles = Get-ChildItem -Filter *.json -Recurse
 
 # Loop through each JSON file and make POST requests
 foreach ($jsonFile in $jsonFiles) {
-
-  # Read JSON files
-  $jsonFiles = Get-ChildItem -Filter *.json -Recurse
-  
   Write-Host "entered into foreach..."
   $jsonContent = Get-Content -Path $jsonFile -Raw
   # Parse the JSON content
@@ -33,17 +30,17 @@ foreach ($jsonFile in $jsonFiles) {
   # Print the extracted value
   Write-Host $kvmName
   
-  # $headers = New-Object "System.Collections.Generic.Dictionary[[String],[String]]"
-  # $headers.Add("Authorization", "Bearer ya29.a0AfB_byBVRRWv3j120nTXVXah3wvqwIpBIGNguhajsUiE87R496vX-zJEJrL3ZLCcGyBkxL5Ynuu61HEwz9nn6_evRSewYFWQT3gi4mrocvzdmo8odRtPVYeFMgXVk7lerSLLom8dDkKCWJCRcNq7yKKM_kIgl_JUZv_USetE1bmNWUwaCgYKAZQSARESFQHsvYlsDh3J5BDbCEj488voROYSPA0182")
-  # $headers.Add("Content-Type", "application/json")
+  $headers = New-Object "System.Collections.Generic.Dictionary[[String],[String]]"
+  $headers.Add("Authorization", "Bearer ya29.a0AfB_byBVRRWv3j120nTXVXah3wvqwIpBIGNguhajsUiE87R496vX-zJEJrL3ZLCcGyBkxL5Ynuu61HEwz9nn6_evRSewYFWQT3gi4mrocvzdmo8odRtPVYeFMgXVk7lerSLLom8dDkKCWJCRcNq7yKKM_kIgl_JUZv_USetE1bmNWUwaCgYKAZQSARESFQHsvYlsDh3J5BDbCEj488voROYSPA0182")
+  $headers.Add("Content-Type", "application/json")
   
-  # $body = @"{
-  #     `"name`":$kvmName,
-  #     `"encrypted`":`"true`"
-  # }"@
+  $body = @"{
+      "name":$kvmName,
+      `"encrypted`":`"true`"
+  }"@
   
-  # $response = Invoke-RestMethod 'https://apigee.googleapis.com/v1/organizations/esi-apigee-x-394004/environments/eval/keyvaluemaps' -Method 'POST' -Headers $headers -Body $body
-  # $response | ConvertTo-Json
+  $response = Invoke-RestMethod 'https://apigee.googleapis.com/v1/organizations/esi-apigee-x-394004/environments/eval/keyvaluemaps' -Method 'POST' -Headers $headers -Body $body
+  $response | ConvertTo-Json
 
   }
   
