@@ -1,0 +1,14 @@
+{
+  "entry": [
+    {
+      "name": "github",
+      "value": "github.com"
+    },
+    {
+      "name": "test",
+      "value": "test.com"
+    }
+  ],
+  "name": "github-kvm",
+  "encrypted": true
+}
