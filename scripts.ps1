@@ -36,13 +36,20 @@ foreach ($jsonFile in $jsonFiles) {
 
     $body = @"
     {
-        "name": "$kvmName",
+        "name": $kvmName,
         "encrypted": true  # Set to false if you don't want encryption
     }
 "@
 
     $response = Invoke-RestMethod 'https://apigee.googleapis.com/v1/organizations/esi-apigee-x-394004/environments/eval/keyvaluemaps' -Method 'POST' -Headers $headers -Body $body
     $response | ConvertTo-Json
+    # Check the HTTP status code and handle errors
+    if ($response.StatusCode -eq 200) {
+        Write-Host "KVM created successfully."
+    } else {
+        Write-Host "Error creating KVM. Status Code: $($response.StatusCode)"
+        Write-Host "Response Content: $($response.Content)"
+    }
 }
 
   
