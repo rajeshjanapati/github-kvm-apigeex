@@ -1,1 +1,14 @@
-{"name":"postman-KVM","encrypted": true}
+{
+  "entry": [
+    {
+      "name": "COMPANY",
+      "value": "example.com"
+    },
+    {
+      "name": "PREFIX",
+      "value": "EXMPL"
+    }
+  ],
+  "name": "cicd_kvm_proxy_2",
+  "encrypted": true
+}
