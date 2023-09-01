@@ -21,29 +21,24 @@ $jsonFiles = Get-ChildItem -Filter *.json -Recurse
 foreach ($jsonFile in $jsonFiles) {
     Write-Host "entered into foreach..."
     $jsonContent = Get-Content -Path $jsonFile -Raw
-    $apiUrl = "https://apigee.googleapis.com/v1/organizations/esi-apigee-x-394004/environments/eval/keyvaluemaps"
-    $headers = @{
-        "Authorization" = "Bearer $token"
-        "Content-Type" = "application/json"
-    }
+    
      # Use the JSON data as the KVM name and create the KVM
     $kvmName = $jsonData.name  # Assuming "name" is the key in your JSON
-    # $body = @{
-    #     "name" = $kvmName
-    #     `"encrypted`"=`"true`"
-    # }
 
-    # Create a hashtable representing the JSON data
-    $body = @{
-        "name" = $kvmName
-        "encrypted" = $true  # Set to $false if you don't want encryption
-    } | ConvertTo-Json
-
-    $response = Invoke-RestMethod -Uri $apiUrl -Method Post -Headers $headers -Body $body
-
-    # Check the response for success or handle errors
-    Write-Host "Created KVM: $kvmName"
+    $headers = New-Object "System.Collections.Generic.Dictionary[[String],[String]]"
+    $headers.Add("Authorization", "Bearer $token")
+    $headers.Add("Content-Type", "application/json")
+    
+    $body = @"
+    {
+        `"name`":`"test-456`",
+        `"value`":`"125`"
+    }
+    "@
+    
+    $response = Invoke-RestMethod 'https://apigee.googleapis.com/v1/organizations/esi-apigee-x-394004/environments/eval/keyvaluemaps' -Method 'POST' -Headers $headers -Body $body
     $response | ConvertTo-Json
+    
     }
     
     # $jsonData = ConvertFrom-Json $jsonContent
