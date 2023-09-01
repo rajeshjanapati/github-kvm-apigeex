@@ -50,9 +50,12 @@ $headers.Add("Authorization", "Bearer ya29.a0AfB_byDVwfNZVNiTBsatmu7gJEQyPExZ3TB
 $headers.Add("Content-Type", "application/json")
 
 $body = @"
-{`"name`":`"github-KVM`",`"encrypted`": true}
+{
+    `"name`":`"test`",
+    `"value`":`"12345`"
+}
 "@
 
-$response = Invoke-RestMethod 'https://apigee.googleapis.com/v1/organizations/esi-apigee-x-394004/environments/eval/keyvaluemaps/' -Method 'POST' -Headers $headers -Body $body
+$response = Invoke-RestMethod 'https://apigee.googleapis.com/v1/organizations/esi-apigee-x-394004/environments/eval/keyvaluemaps/github-KVM/entries' -Method 'POST' -Headers $headers -Body $body
 $response | ConvertTo-Json
 
