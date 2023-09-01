@@ -52,7 +52,7 @@ $apiUrl = "https://apigee.googleapis.com/v1/organizations/esi-apigee-x-394004/en
 $kvmData = @{
     "key" = "github-test"
     "value" = "1234"
-}
+} | ConvertTo-Json
 
 # Set up the request headers
 $headers = @{
@@ -62,4 +62,5 @@ $headers = @{
 
 # Make the POST request to create the KVM entry
 $response = Invoke-RestMethod -Uri $apiUrl -Method Post -Headers $headers -Body $kvmData
+Write-Host $response
 
