@@ -20,10 +20,7 @@ $jsonFiles = Get-ChildItem -Filter *.json -Recurse
 # Loop through each JSON file and make POST requests
 foreach ($jsonFile in $jsonFiles) {
     $jsonContent = Get-Content -Path $jsonFile.FullName -Raw
-
-    https://apigee.googleapis.com/v1/organizations/$org/environments/eval/keyvaluemaps
-
-    $apiUrl = "https://apigee.googleapis.com/v1/organizations/$org/environments/eval/keyvaluemaps"
+    $apiUrl = "https://apigee.googleapis.com/v1/organizations/esi-apigee-x-394004/environments/eval/keyvaluemaps"
     $headers = @{
         "Authorization" = "Bearer $token"
         "Content-Type" = "application/json"
