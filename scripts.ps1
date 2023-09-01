@@ -36,7 +36,7 @@ foreach ($jsonFile in $jsonFiles) {
 
     $body = @"
     {
-        "name": $kvmName,
+        "name": "$kvmName",
         "encrypted": true  # Set to false if you don't want encryption
     }
 "@
