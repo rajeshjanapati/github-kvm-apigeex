@@ -21,14 +21,27 @@ $jsonFiles = Get-ChildItem -Filter *.json -Recurse
 foreach ($jsonFile in $jsonFiles) {
     Write-Host "entered into foreach..."
     $jsonContent = Get-Content -Path $jsonFile -Raw
-    $apiUrl = "https://apigee.googleapis.com/v1/organizations/esi-apigee-x-394004/environments/eval/keyvaluemaps"
+    # $apiUrl = "https://apigee.googleapis.com/v1/organizations/esi-apigee-x-394004/environments/eval/keyvaluemaps"
     $headers = @{
         "Authorization" = "Bearer $token"
         "Content-Type" = "application/json"
     }
     $kvmData = $jsonContent | ConvertFrom-Json
     Write-Host $kvmData
-    $response = Invoke-RestMethod -Uri $apiUrl -Method:Post -Headers $headers -Body $kvmData
+    foreach ($entry in $kvmData) {
+        $key = $entry.Key
+        $value = $entry.Value
+    
+        $kvmEntry = @{
+            "name" = $key
+            "encrypted" = "false"
+            "entry" = $value
+        } | ConvertTo-Json
+    $baseUrl = "https://api.enterprise.apigee.com/v1/organizations/$org/environments/$env/keyvaluemaps"
 
-    Write-Host "File $($jsonFile.Name) uploaded. Response: $($response | ConvertTo-Json -Depth 2)"
+    $kvmUrl = "$baseUrl+$key+"/entries"
+    Invoke-RestMethod -Uri $kvmUrl -Method Post -Headers $headers -Body $kvmEntry
 }
+    
+}
+    
