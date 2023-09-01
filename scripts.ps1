@@ -45,28 +45,14 @@ $jsonFiles = Get-ChildItem -Filter *.json -Recurse
     
 # }
 
-# Define the API endpoint
-$apiUrl = "https://apigee.googleapis.com/v1/organizations/esi-apigee-x-394004/environments/eval/keyvaluemaps"
+$headers = New-Object "System.Collections.Generic.Dictionary[[String],[String]]"
+$headers.Add("Authorization", "Bearer ya29.a0AfB_byDVwfNZVNiTBsatmu7gJEQyPExZ3TBhYONcediO5NcqjC6jf1o34DmhvKWHc999CUnVFJfjfjkELG3OFRGebsOAPMvoJmLsRccgc4gbDtwqWfVbrI_1STm9yQhpoxFpnPKLZQY5K0YCu9U0sNZaeRnz31PTu-vWYR5Px7HKYXkaCgYKAaISARESFQHsvYls6LkmPwzCEYsHSFPkVZQVDA0182")
+$headers.Add("Content-Type", "application/json")
 
-# Define the KVM entry data (key and value)
-$kvmData = @{
-    "name"= "github-kvm",
-    "encrypted"=true,
-    "entry": [
-    {
-      "key"="github",
-      "value"= "github.com"
-    },
-  ]
-} | ConvertTo-Json
+$body = @"
+{`"name`":`"github-KVM`",`"encrypted`": true}
+"@
 
-# Set up the request headers
-$headers = @{
-    "Authorization" = "Bearer ya29.a0AfB_byDVwfNZVNiTBsatmu7gJEQyPExZ3TBhYONcediO5NcqjC6jf1o34DmhvKWHc999CUnVFJfjfjkELG3OFRGebsOAPMvoJmLsRccgc4gbDtwqWfVbrI_1STm9yQhpoxFpnPKLZQY5K0YCu9U0sNZaeRnz31PTu-vWYR5Px7HKYXkaCgYKAaISARESFQHsvYls6LkmPwzCEYsHSFPkVZQVDA0182"
-    "Content-Type" = "application/json"
-}
-Write-Host $kvmData
-# Make the POST request to create the KVM entry
-$response = Invoke-RestMethod -Uri $apiUrl -Method Post -Headers $headers -Body $kvmData
-Write-Host $response
+$response = Invoke-RestMethod 'https://apigee.googleapis.com/v1/organizations/esi-apigee-x-394004/environments/eval/keyvaluemaps/' -Method 'POST' -Headers $headers -Body $body
+$response | ConvertTo-Json
 
