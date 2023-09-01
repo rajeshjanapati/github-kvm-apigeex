@@ -26,9 +26,9 @@ foreach ($jsonFile in $jsonFiles) {
         "Authorization" = "Bearer $token"
         "Content-Type" = "application/json"
     }
-    
-    Write-Host $jsonContent
-    $response = Invoke-RestMethod -Uri $apiUrl -Method:Post -Headers $headers -Body $jsonContent
+    $kvmData = $jsonContent | ConvertFrom-Json
+    Write-Host $kvmData
+    $response = Invoke-RestMethod -Uri $apiUrl -Method:Post -Headers $headers -Body $kvmData
 
     Write-Host "File $($jsonFile.Name) uploaded. Response: $($response | ConvertTo-Json -Depth 2)"
 }
