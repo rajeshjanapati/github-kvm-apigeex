@@ -56,10 +56,10 @@ $kvmData = @{
 
 # Set up the request headers
 $headers = @{
-    "Authorization" = "Bearer $token"
+    "Authorization" = "Bearer ya29.a0AfB_byDVwfNZVNiTBsatmu7gJEQyPExZ3TBhYONcediO5NcqjC6jf1o34DmhvKWHc999CUnVFJfjfjkELG3OFRGebsOAPMvoJmLsRccgc4gbDtwqWfVbrI_1STm9yQhpoxFpnPKLZQY5K0YCu9U0sNZaeRnz31PTu-vWYR5Px7HKYXkaCgYKAaISARESFQHsvYls6LkmPwzCEYsHSFPkVZQVDA0182"
     "Content-Type" = "application/json"
 }
-
+Write-Host $kvmData
 # Make the POST request to create the KVM entry
 $response = Invoke-RestMethod -Uri $apiUrl -Method Post -Headers $headers -Body $kvmData
 Write-Host $response
