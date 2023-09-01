@@ -1,11 +1,11 @@
 {
   "entry": [
     {
-      "name": "github",
+      "key": "github",
       "value": "github.com"
     },
     {
-      "name": "test",
+      "key": "test",
       "value": "test.com"
     }
   ],
