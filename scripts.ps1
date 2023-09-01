@@ -28,9 +28,15 @@ foreach ($jsonFile in $jsonFiles) {
     }
      # Use the JSON data as the KVM name and create the KVM
     $kvmName = $jsonData.name  # Assuming "name" is the key in your JSON
+    # $body = @{
+    #     "name" = $kvmName
+    #     `"encrypted`"=`"true`"
+    # }
+
+    # Create a hashtable representing the JSON data
     $body = @{
         "name" = $kvmName
-        `"encrypted`"=`"true`"
+        "encrypted" = $true  # Set to $false if you don't want encryption
     } | ConvertTo-Json
 
     $response = Invoke-RestMethod -Uri $apiUrl -Method Post -Headers $headers -Body $body
