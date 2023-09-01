@@ -22,10 +22,15 @@ foreach ($jsonFile in $jsonFiles) {
   
   Write-Host "entered into foreach..."
   $jsonContent = Get-Content -Path $jsonFile -Raw
+  # Parse the JSON content
+  $jsonData = ConvertFrom-Json $jsonContent
   
-   # Use the JSON data as the KVM name and create the KVM
-  $kvmName = $jsonData.name  # Assuming "name" is the key in your JSON
+  # Extract the value of the "name" key from the JSON data
+  $kvmName = $jsonData.name
+  
+  # Print the extracted value
   Write-Host $kvmName
+
   }
 $headers = New-Object "System.Collections.Generic.Dictionary[[String],[String]]"
 $headers.Add("Authorization", "Bearer ya29.a0AfB_byBVRRWv3j120nTXVXah3wvqwIpBIGNguhajsUiE87R496vX-zJEJrL3ZLCcGyBkxL5Ynuu61HEwz9nn6_evRSewYFWQT3gi4mrocvzdmo8odRtPVYeFMgXVk7lerSLLom8dDkKCWJCRcNq7yKKM_kIgl_JUZv_USetE1bmNWUwaCgYKAZQSARESFQHsvYlsDh3J5BDbCEj488voROYSPA0182")
@@ -33,7 +38,7 @@ $headers.Add("Content-Type", "application/json")
 
 $body = @"
 {
-    `"name`":`"test-pst21`",
+    `"name`":`"test-pst321`",
     `"encrypted`":`"true`"
 }
 "@
