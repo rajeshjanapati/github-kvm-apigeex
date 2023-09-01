@@ -39,7 +39,7 @@ foreach ($jsonFile in $jsonFiles) {
         } | ConvertTo-Json
     $baseUrl = "https://api.enterprise.apigee.com/v1/organizations/$org/environments/$env/keyvaluemaps"
 
-    $kvmUrl = "$baseUrl/$key/entries"
+    $kvmUrl = $baseUrl+$key+"/entries"
     Invoke-RestMethod -Uri $kvmUrl -Method Post -Headers $headers -Body $kvmEntry
 }
     
