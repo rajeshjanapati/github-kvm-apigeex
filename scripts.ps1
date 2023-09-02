@@ -34,15 +34,32 @@ foreach ($jsonFile in $jsonFiles) {
     $headers.Add("Authorization", "Bearer $token")
     $headers.Add("Content-Type", "application/json")
 
-    $body =@{
+    $body1 =@{
         "name"=$kvmName;
         "encrypted"=true;
         }
 
     Write-Host $body
 
-    $response = Invoke-RestMethod 'https://apigee.googleapis.com/v1/organizations/esi-apigee-x-394004/environments/eval/keyvaluemaps' -Method 'POST' -Headers $headers -Body ($body|ConvertTo-Json)
-    $response | ConvertTo-Json
+    $kvmcreate = Invoke-RestMethod 'https://apigee.googleapis.com/v1/organizations/esi-apigee-x-394004/environments/eval/keyvaluemaps' -Method 'POST' -Headers $headers -Body ($body1|ConvertTo-Json)
+    $kvmcreate | ConvertTo-Json
+
+    # Now, create KVM entries for each value in your KVM (assuming you have an array of values)
+    $kvmValues = $jsonData.values  # Replace 'values' with the actual key in your JSON
+
+    foreach ($value in $kvmValues) {
+        $body2 = @{
+            "name" = $kvmName;
+            "encrypted" = $true;
+            "entry" = $value;
+        }
+
+        Write-Host "Creating KVM entry for value: $value"
+        $kvmentry = Invoke-RestMethod "https://apigee.googleapis.com/v1/organizations/esi-apigee-x-394004/environments/eval/keyvaluemaps/$kvmName/entries" -Method 'POST' -Headers $headers -Body ($body2 | ConvertTo-Json)
+        $kvmentry | ConvertTo-Json
+
+
+        
     # Check the HTTP status code and handle errors
     if ($response.StatusCode -eq 200) {
         Write-Host "KVM created successfully."
@@ -50,7 +67,8 @@ foreach ($jsonFile in $jsonFiles) {
         Write-Host "Error creating KVM. Status Code: $($response.StatusCode)"
         Write-Host "Response Content: $($response.Content)"
     }
-}
+    }
+    }
 
   
 
