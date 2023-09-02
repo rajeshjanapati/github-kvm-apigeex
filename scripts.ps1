@@ -19,7 +19,6 @@ $jsonFiles = Get-ChildItem -Filter *.json -Recurse
 
 # Loop through each JSON file and make POST requests
 foreach ($jsonFile in $jsonFiles) {
-    Write-Host "Entered into foreach..."
     $jsonContent = Get-Content -Path $jsonFile -Raw
     # Parse the JSON content
     $jsonData = ConvertFrom-Json $jsonContent
@@ -39,19 +38,18 @@ foreach ($jsonFile in $jsonFiles) {
         "encrypted"=true;
         }
 
-    Write-Host $body
-
     $kvmcreate = Invoke-RestMethod 'https://apigee.googleapis.com/v1/organizations/esi-apigee-x-394004/environments/eval/keyvaluemaps' -Method 'POST' -Headers $headers -Body ($body1|ConvertTo-Json)
     $kvmcreate | ConvertTo-Json
 
     # Now, create KVM entries for each value in your KVM (assuming you have an array of values)
-    $kvmValues = $jsonData.values  # Replace 'values' with the actual key in your JSON
+    $kvmValues = $jsonData.entry  # Replace 'values' with the actual key in your JSON
+    Write-Host $kvmValues
 
-    foreach ($value in $kvmValues) {
+    foreach ($entry in $kvmValues) {
         $body2 = @{
             "name" = $kvmName;
-            "encrypted" = $true;
-            "entry" = $value;
+            "encrypted" = true;
+            "entry" = $entry;
         }
 
         Write-Host "Creating KVM entry for value: $value"
