@@ -51,7 +51,7 @@ foreach ($jsonFile in $jsonFiles) {
             "key" = $entry.name;
             "value" = $entry.value;
         }
-        Write-Host "Creating KVM entry for value: $entry"
+        Write-Host "Creating KVM entry for value: $entry.name"
         $kvmentry = Invoke-RestMethod "https://apigee.googleapis.com/v1/organizations/esi-apigee-x-394004/environments/eval/keyvaluemaps/$kvmName/entries" -Method 'POST' -Headers $headers -Body ($body2|ConvertTo-Json)
         $kvmentry | ConvertTo-Json
         }
