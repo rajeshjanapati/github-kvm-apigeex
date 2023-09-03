@@ -33,11 +33,6 @@ foreach ($jsonFile in $jsonFiles) {
     $headers.Add("Authorization", "Bearer $token")
     $headers.Add("Content-Type", "application/json")
 
-    $body1 =@{
-        "name"=$kvmName;
-        "encrypted"=true;
-        }
-    Write-Host $body1
 
     $kvmget = Invoke-RestMethod 'https://apigee.googleapis.com/v1/organizations/esi-apigee-x-394004/environments/eval/keyvaluemaps' -Method 'GET' -Headers $headers
     $kvmget | ConvertTo-Json
@@ -49,30 +44,33 @@ foreach ($jsonFile in $jsonFiles) {
     foreach ($valueToCheck in $array) {
         if ($array -contains $valueToCheck) {
             Write-Host "$valueToCheck is present in the array."
+            $entries = $jsonData.entry
+            Write-Host "Values: $vlaues"
+        
+            foreach ($entry in $entries) {
+                Write-Host "step-2"
+                $name = $entry.key
+                $value = $entry.value
+                Write-Host "Key: $name, Value: $value"
+                $body2 = @{
+                    "name" = $name;
+                    "value" = $value;
+                }
+                Write-Host "body2: $body2"
+                
+                $kvmentry = Invoke-RestMethod "https://apigee.googleapis.com/v1/organizations/esi-apigee-x-394004/environments/eval/keyvaluemaps/$kvmName/entries" -Method 'POST' -Headers $headers -Body ($body2|ConvertTo-Json)
+                $kvmentry | ConvertTo-Json
+            }
         } else {
+            $body1 =@{
+                "name"=$kvmName;
+                "encrypted"=true;
+                }
+            Write-Host $body1
             Write-Host "$valueToCheck is not present in the array."
+            $kvmcreate = Invoke-RestMethod 'https://apigee.googleapis.com/v1/organizations/esi-apigee-x-394004/environments/eval/keyvaluemaps' -Method 'POST' -Headers $headers -Body ($body1|ConvertTo-Json)
+            $kvmcreate | ConvertTo-Json
         }
     }
-
-
-    # $kvmcreate = Invoke-RestMethod 'https://apigee.googleapis.com/v1/organizations/esi-apigee-x-394004/environments/eval/keyvaluemaps' -Method 'POST' -Headers $headers -Body ($body1|ConvertTo-Json)
-    # $kvmcreate | ConvertTo-Json
     
-    # $entries = $jsonData.entry
-    # Write-Host "Values: $vlaues"
-
-    # foreach ($entry in $entries) {
-    #     Write-Host "step-2"
-    #     $name = $entry.key
-    #     $value = $entry.value
-    #     Write-Host "Key: $name, Value: $value"
-    #     $body2 = @{
-    #         "name" = $name;
-    #         "value" = $value;
-    #     }
-    #     Write-Host "body2: $body2"
-        
-    #     $kvmentry = Invoke-RestMethod "https://apigee.googleapis.com/v1/organizations/esi-apigee-x-394004/environments/eval/keyvaluemaps/$kvmName/entries" -Method 'POST' -Headers $headers -Body ($body2|ConvertTo-Json)
-    #     $kvmentry | ConvertTo-Json
-    # }
     }
