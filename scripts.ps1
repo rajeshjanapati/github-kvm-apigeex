@@ -43,6 +43,18 @@ foreach ($jsonFile in $jsonFiles) {
     $kvmget | ConvertTo-Json
     Write-Host $kvmget
 
+    # Your array
+    $array = $kvmget
+    
+    foreach ($valueToCheck in $array) {
+        if ($array -contains $valueToCheck) {
+            Write-Host "$valueToCheck is present in the array."
+        } else {
+            Write-Host "$valueToCheck is not present in the array."
+        }
+    }
+
+
     # $kvmcreate = Invoke-RestMethod 'https://apigee.googleapis.com/v1/organizations/esi-apigee-x-394004/environments/eval/keyvaluemaps' -Method 'POST' -Headers $headers -Body ($body1|ConvertTo-Json)
     # $kvmcreate | ConvertTo-Json
     
