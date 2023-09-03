@@ -26,6 +26,8 @@ foreach ($jsonFile in $jsonFiles) {
     # Extract the value of the "name" key from the JSON data
     $kvmName = $jsonData.name
 
+    $entries = $jsonObject.entry
+
     # Print the extracted value
     Write-Host "KVM Name: $kvmName"
 
@@ -45,17 +47,19 @@ foreach ($jsonFile in $jsonFiles) {
     $kvmValues = $jsonData.entry  # Replace 'values' with the actual key in your JSON
     Write-Host $kvmValues
 
-    foreach ($entry in $kvmValues) {
-        Write-Host $kvmName
-        $body2 = @{
-            "key" = "rajesh;
-            "value" = "topper";
+    foreach ($entry in $entries) {
+        $name = $entry.name
+        $value = $entry.value
+        Write-Host "Name: $name, Value: $value"
+        $body2 =@{
+        "name"=$name;
+        "value"=$value;
         }
         Write-Host $body2
-        Write-Host "Creating KVM entry for value: $($entry[name])"
         $kvmentry = Invoke-RestMethod "https://apigee.googleapis.com/v1/organizations/esi-apigee-x-394004/environments/eval/keyvaluemaps/$kvmName/entries" -Method 'POST' -Headers $headers -Body ($body2|ConvertTo-Json)
         $kvmentry | ConvertTo-Json
-        }
+        
+    }
 
 
 
