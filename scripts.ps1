@@ -49,6 +49,9 @@ foreach ($jsonFile in $jsonFiles) {
     $jsonObject = ConvertFrom-Json $jsonData.entry
     $entries = $jsonObject.entry
     Write-Host $entries
+    Write-Host "step-1"
+    Write-Host "Entries: $($entries | Out-String)"
+    Write-Host "KVM Values: $($kvmValues | Out-String)"
 
     foreach ($entry in $jsonObject.entry) {
     $name = $entry.key
