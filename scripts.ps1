@@ -39,8 +39,8 @@ foreach ($jsonFile in $jsonFiles) {
         }
     Write-Host $body1
 
-    # $kvmcreate = Invoke-RestMethod 'https://apigee.googleapis.com/v1/organizations/esi-apigee-x-394004/environments/eval/keyvaluemaps' -Method 'POST' -Headers $headers -Body ($body1|ConvertTo-Json)
-    # $kvmcreate | ConvertTo-Json
+    $kvmcreate = Invoke-RestMethod 'https://apigee.googleapis.com/v1/organizations/esi-apigee-x-394004/environments/eval/keyvaluemaps' -Method 'POST' -Headers $headers -Body ($body1|ConvertTo-Json)
+    $kvmcreate | ConvertTo-Json
 
     # Now, create KVM entries for each value in your KVM (assuming you have an array of values)
     $kvmValues = $jsonData.entry  # Replace 'values' with the actual key in your JSON
@@ -67,10 +67,8 @@ foreach ($jsonFile in $jsonFiles) {
         }
         
         Write-Host $body2
-    #     # $kvmentry = Invoke-RestMethod "https://apigee.googleapis.com/v1/organizations/esi-apigee-x-394004/environments/eval/keyvaluemaps/$kvmName/entries" -Method 'POST' -Headers $headers -Body ($entryObject|ConvertTo-Json)
-    #     # $kvmentry | ConvertTo-Json
-        
-    # }
+        $kvmentry = Invoke-RestMethod "https://apigee.googleapis.com/v1/organizations/esi-apigee-x-394004/environments/eval/keyvaluemaps/$kvmName/entries" -Method 'POST' -Headers $headers -Body ($body2|ConvertTo-Json)
+        $kvmentry | ConvertTo-Json
     }
     }
 
