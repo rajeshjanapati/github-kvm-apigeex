@@ -56,8 +56,8 @@ foreach ($jsonFile in $jsonFiles) {
     $vlaues = $($entries | Out-String)
     Write-Host "Values: $vlaues"
 
-    foreach ($entry in $entry.vlaues) {
-    
+    foreach ($entry in $entries) {
+        Write-Host "step-2"
         $name = $entry.key
         $value = $entry.value
         Write-Host "Name: $name, Value: $value"
