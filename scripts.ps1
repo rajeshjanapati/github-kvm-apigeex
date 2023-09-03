@@ -41,8 +41,8 @@ foreach ($jsonFile in $jsonFiles) {
     $url = "https://apigee.googleapis.com/v1/organizations/esi-apigee-x-394004/environments/eval/keyvaluemaps/$kvmName/entries"
 
     $kvmgetentries = Invoke-RestMethod -Uri $url -Method 'GET' -Headers $headers
-    $kvmgetentries | ConvertTo-Json
-    Write-Host $kvmgetentries
+    $kvmgetentriesvalues = $kvmgetentries | ConvertTo-Json
+    Write-Host $kvmgetentriesvalues
 
     # Your array
     $array = $kvmget
