@@ -1,8 +1,8 @@
 {
   "entry": [
     {
-      "key": "COMPANY",
-      "value": "example.com"
+      "key": "test153",
+      "value": "test153.com"
     }
   ],
   "name": "cicd_kvm_proxy_2",
