@@ -54,19 +54,19 @@ foreach ($jsonFile in $jsonFiles) {
     Write-Host "Entries: $($entries | Out-String)"
     Write-Host "KVM Values: $($kvmValues | Out-String)"
 
-    # foreach ($entry in $jsonObject.entry) {
-    #     $name = $entry.key
-    #     $value = $entry.value
-    #     Write-Host "Name: $name, Value: $value"
-    #     $body2 = @{
-    #         "name" = $name
-    #         "value" = $value
-    #     }
-    #     $entryObject = @{
-    #         "entry" = $body2
-    #     }
+    foreach ($entry in $jsonObject.entry) {
+        $name = $entry.key
+        $value = $entry.value
+        Write-Host "Name: $name, Value: $value"
+        $body2 = @{
+            "name" = $name
+            "value" = $value
+        }
+        $entryObject = @{
+            "entry" = $body2
+        }
         
-    #     Write-Host $body2
+        Write-Host $body2
     #     # $kvmentry = Invoke-RestMethod "https://apigee.googleapis.com/v1/organizations/esi-apigee-x-394004/environments/eval/keyvaluemaps/$kvmName/entries" -Method 'POST' -Headers $headers -Body ($entryObject|ConvertTo-Json)
     #     # $kvmentry | ConvertTo-Json
         
