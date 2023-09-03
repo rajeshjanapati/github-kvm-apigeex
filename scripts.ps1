@@ -61,7 +61,7 @@ foreach ($jsonFile in $jsonFiles) {
         $name = $entry.key
         $value = $entry.value
         Write-Host "Key: $name, Value: $value"
-        body2 = @{
+        $body2 = @{
             "name" = $name;
             "value" = $value;
         }
