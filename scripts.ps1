@@ -26,8 +26,6 @@ foreach ($jsonFile in $jsonFiles) {
     # Extract the value of the "name" key from the JSON data
     $kvmName = $jsonData.name
 
-    $entries = $jsonObject.entry
-
     # Print the extracted value
     Write-Host "KVM Name: $kvmName"
 
@@ -47,31 +45,23 @@ foreach ($jsonFile in $jsonFiles) {
     $kvmValues = $jsonData.entry  # Replace 'values' with the actual key in your JSON
     Write-Host $kvmValues
 
-    foreach ($entry in $entries) {
-        $name = $entry.name
-        $value = $entry.value
-        Write-Host "Name: $name, Value: $value"
-        $body2 =@{
-        "name"=$name;
-        "value"=$value;
-        }
-        Write-Host $body2
-        $kvmentry = Invoke-RestMethod "https://apigee.googleapis.com/v1/organizations/esi-apigee-x-394004/environments/eval/keyvaluemaps/$kvmName/entries" -Method 'POST' -Headers $headers -Body ($body2|ConvertTo-Json)
-        $kvmentry | ConvertTo-Json
+    $jsonObject = ConvertFrom-Json $jsonData.entry
+    $entries = $jsonObject.entry
+    Write-Host $entries
+
+    # foreach ($entry in $entries) {
+    #     $name = $entry.name
+    #     $value = $entry.value
+    #     Write-Host "Name: $name, Value: $value"
+    #     $body2 =@{
+    #     "name"=$name;
+    #     "value"=$value;
+    #     }
+    #     Write-Host $body2
+    #     $kvmentry = Invoke-RestMethod "https://apigee.googleapis.com/v1/organizations/esi-apigee-x-394004/environments/eval/keyvaluemaps/$kvmName/entries" -Method 'POST' -Headers $headers -Body ($body2|ConvertTo-Json)
+    #     $kvmentry | ConvertTo-Json
         
-    }
-
-
-
-
-        
-    # Check the HTTP status code and handle errors
-    if ($response.StatusCode -eq 200) {
-        Write-Host "KVM created successfully."
-    } else {
-        Write-Host "Error creating KVM. Status Code: $($response.StatusCode)"
-        Write-Host "Response Content: $($response.Content)"
-    }
+    # }
     }
 
   
