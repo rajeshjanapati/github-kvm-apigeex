@@ -53,14 +53,14 @@ foreach ($jsonFile in $jsonFiles) {
     Write-Host "step-1"
     # Write-Host "Entries: $($entries | Out-String)"
     # Write-Host "KVM Values: $($kvmValues | Out-String)"
-    $vlaues = $($entries | Out-String)
+    $entries = $jsonData.entry
     Write-Host "Values: $vlaues"
 
-    foreach ($entry in $jsonObject.entry) {
+    foreach ($entry in $entries) {
         Write-Host "step-2"
         $name = $entry.key
         $value = $entry.value
-        Write-Host "Name: $name, Value: $value"
+        Write-Host "Key: $name, Value: $value"
         $body2 = @{
             "name" = $name
             "value" = $value
