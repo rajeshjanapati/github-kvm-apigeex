@@ -3,10 +3,6 @@
     {
       "key": "COMPANY",
       "value": "example.com"
-    },
-    {
-      "key": "PREFIX",
-      "value": "EXMPL"
     }
   ],
   "name": "cicd_kvm_proxy_2",
