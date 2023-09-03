@@ -46,7 +46,7 @@ foreach ($jsonFile in $jsonFiles) {
     $kvmValues = $jsonData.entry  # Replace 'values' with the actual key in your JSON
     Write-Host $kvmValues
 
-    $jsonObject = ConvertFrom-Json $jsonData.entry
+    # $jsonObject = ConvertFrom-Json $jsonData.entry
     $entries = $jsonObject.entry
     Write-Host $jsonObject
     Write-Host $entries
