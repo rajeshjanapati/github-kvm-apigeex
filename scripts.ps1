@@ -69,7 +69,9 @@ foreach ($jsonFile in $jsonFiles) {
             "entry" = $body2
         }
         
-        Write-Host $entryObject
+        Write-Host "body1: $entryObject"
+        Write-Host "body2: $body2"
+        
         $kvmentry = Invoke-RestMethod "https://apigee.googleapis.com/v1/organizations/esi-apigee-x-394004/environments/eval/keyvaluemaps/$kvmName/entries" -Method 'POST' -Headers $headers -Body ($entryObject|ConvertTo-Json)
         $kvmentry | ConvertTo-Json
     }
