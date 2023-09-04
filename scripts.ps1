@@ -68,9 +68,22 @@ foreach ($jsonFile in $jsonFiles) {
                 }
                 Write-Host "body2: $body2"
                 
-                $kvmentry = Invoke-RestMethod "https://apigee.googleapis.com/v1/organizations/esi-apigee-x-394004/environments/eval/keyvaluemaps/$kvmName/entries" -Method 'POST' -Headers $headers -Body ($body2|ConvertTo-Json)
-                $kvmentry | ConvertTo-Json
-                Write-Host "StatusCode: $kvmentry.StatusCode"
+                try {
+                    
+                    # Make the API request
+                    $response = Invoke-RestMethod -Uri "https://apigee.googleapis.com/v1/organizations/esi-apigee-x-394004/environments/eval/keyvaluemaps/$kvmName/entries" -Method 'POST' -Headers $headers -Body ($body2 | ConvertTo-Json)
+                
+                    # Get and print the status code
+                    $statuscode = $response.StatusCode
+                    Write-Host "Status Code: $statuscode"
+                } catch [System.Net.HttpStatusCode] {
+                    # Handle the specific error (HTTP status code 409) gracefully
+                    Write-Host "Conflict (409) error occurred, but the script will continue."
+                } catch {
+                    # Handle any other exceptions that may occur
+                    Write-Host "An error occurred: $_"
+                }
+
             }
         } else {
             $body1 =@{
