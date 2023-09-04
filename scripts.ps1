@@ -54,7 +54,7 @@ foreach ($jsonFile in $jsonFiles) {
 
     # Loop through each Key-Value Map and check if entries exist
     foreach ($valueToCheck in $kvmjson) {
-      if ($array -contains $valueToCheck) {
+      if ($kvmjson -contains $valueToCheck) {
           Write-Host "$valueToCheck is present in the array."
   
           # Get the list of entries for the current Key-Value Map
