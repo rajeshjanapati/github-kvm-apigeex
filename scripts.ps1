@@ -68,6 +68,7 @@ foreach ($jsonFile in $jsonFiles) {
               Write-Host "No entries found for Key-Value Map: $kvmName"
           }
       }
+      }
 
     # Your array
     $array = $kvmget
