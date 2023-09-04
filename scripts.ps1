@@ -43,6 +43,45 @@ foreach ($jsonFile in $jsonFiles) {
     $kvmgetentries = Invoke-RestMethod -Uri $url -Method 'GET' -Headers $headers
     $kvmgetentriesvalues = $kvmgetentries | ConvertTo-Json
     Write-Host $kvmgetentriesvalues
+    
+    # Your JSON data as a PowerShell object
+    $jsonData1 = @{
+        $kvmgetentriesvalues
+    }
+    
+    # Prompt the user for entry values to check (comma-separated)
+    $entryValues = Read-Host "Enter the entry values to check (comma-separated)"
+    $valuesToCheck = $entryValues -split ',' | ForEach-Object { $_.Trim() }
+    
+    # Initialize an array to store the results
+    $results = @()
+    
+    # Check each value in the list
+    foreach ($valueToCheck in $valuesToCheck) {
+        # Create an entry to check based on the current value
+        $entryToCheck = @{
+            "name" = $valueToCheck
+        }
+        
+        # Check if the entry exists in the array
+        $entryExists = $jsonData1.keyValueEntries -contains $entryToCheck
+    
+        # Add the result to the results array
+        $results += @{
+            "Value" = $valueToCheck
+            "Exists" = $entryExists
+        }
+    }
+    
+    # Output the results
+    $results | ForEach-Object {
+        if ($_.Exists) {
+            Write-Host "Entry with value $($_.Value) exists in the array."
+        } else {
+            Write-Host "Entry with value $($_.Value) does not exist in the array."
+        }
+    }
+
 
     # Your array
     $array = $kvmget
