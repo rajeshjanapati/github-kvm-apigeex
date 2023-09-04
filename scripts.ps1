@@ -34,19 +34,19 @@ foreach ($jsonFile in $jsonFiles) {
     $headers.Add("Content-Type", "application/json")
 
 
-    $kvmget = Invoke-RestMethod 'https://apigee.googleapis.com/v1/organizations/esi-apigee-x-394004/environments/eval/keyvaluemaps' -Method 'GET' -Headers $headers
-    $kvmget | ConvertTo-Json
-    # Write-Host $kvmget
+    # $kvmget = Invoke-RestMethod 'https://apigee.googleapis.com/v1/organizations/esi-apigee-x-394004/environments/eval/keyvaluemaps' -Method 'GET' -Headers $headers
+    # $kvmget | ConvertTo-Json
+    # # Write-Host $kvmget
 
-    $url = "https://apigee.googleapis.com/v1/organizations/esi-apigee-x-394004/environments/eval/keyvaluemaps/$kvmName/entries"
+    # $url = "https://apigee.googleapis.com/v1/organizations/esi-apigee-x-394004/environments/eval/keyvaluemaps/$kvmName/entries"
 
-    $kvmgetentries = Invoke-RestMethod -Uri $url -Method 'GET' -Headers $headers
-    $kvmgetentriesvalues = $kvmgetentries | ConvertTo-Json
-    # Write-Host $kvmgetentriesvalues
+    # $kvmgetentries = Invoke-RestMethod -Uri $url -Method 'GET' -Headers $headers
+    # $kvmgetentriesvalues = $kvmgetentries | ConvertTo-Json
+    # # Write-Host $kvmgetentriesvalues
     
     
-    # Output the KVM entries for debugging
-    $kvmgetentriesvalues | Format-Table
+    # # Output the KVM entries for debugging
+    # $kvmgetentriesvalues | Format-Table
 
     $kvmList = Invoke-RestMethod 'https://apigee.googleapis.com/v1/organizations/esi-apigee-x-394004/environments/eval/keyvaluemaps' -Method 'GET' -Headers $headers
     $kvmjson = $kvmList| ConvertTo-Json
