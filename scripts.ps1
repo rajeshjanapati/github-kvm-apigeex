@@ -44,9 +44,13 @@ foreach ($jsonFile in $jsonFiles) {
     $kvmgetentriesvalues = $kvmgetentries | ConvertTo-Json
     Write-Host $kvmgetentriesvalues
     
+    
+    # Output the KVM entries for debugging
+    $kvmgetentriesvalues | Format-Table
+    
     # Your JSON data as a PowerShell object
     $jsonData1 = @{
-        "keyValueEntries" = $kvmgetentriesvalues
+        "keyValueEntries" = $kvmgetentriesvalues.keyValueEntries
     }
     
     # Prompt the user for entry values to check (comma-separated)
@@ -82,7 +86,6 @@ foreach ($jsonFile in $jsonFiles) {
             Write-Host "Entry with value $($_.Value) does not exist in the array."
         }
     }
-
 
     # Your array
     $array = $kvmget
