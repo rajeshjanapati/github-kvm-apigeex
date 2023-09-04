@@ -58,6 +58,7 @@ foreach ($jsonFile in $jsonFiles) {
     
     # Check each value in the list
     foreach ($valueToCheck in $valuesToCheck) {
+        Write-Host "step1..."
         # Create an entry to check based on the current value
         $entryToCheck = @{
             "name" = $valueToCheck
