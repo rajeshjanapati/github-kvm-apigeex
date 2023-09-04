@@ -49,10 +49,12 @@ foreach ($jsonFile in $jsonFiles) {
     $kvmgetentriesvalues | Format-Table
 
     $kvmList = Invoke-RestMethod 'https://apigee.googleapis.com/v1/organizations/esi-apigee-x-394004/environments/eval/keyvaluemaps' -Method 'GET' -Headers $headers
-    Write-Host "list: $kvmList| ConvertTo-Json"
+    $kvmjson = $kvmList| ConvertTo-Json
+    Write-Host "list: $kvmjson"
 
     # Loop through each Key-Value Map and check if entries exist
     foreach ($kvm in $kvmList.keyValueMaps) {
+      Write-Host "step1..."
       $kvmName = $kvm.name
   
       # Get the list of entries for the current Key-Value Map
