@@ -27,7 +27,7 @@ foreach ($jsonFile in $jsonFiles) {
     $kvmName = $jsonData.name
 
     # Print the extracted value
-    Write-Host "KVM Name: $kvmName"
+    # Write-Host "KVM Name: $kvmName"
 
     $headers = New-Object "System.Collections.Generic.Dictionary[[String],[String]]"
     $headers.Add("Authorization", "Bearer $token")
@@ -36,7 +36,7 @@ foreach ($jsonFile in $jsonFiles) {
 
     $kvmget = Invoke-RestMethod 'https://apigee.googleapis.com/v1/organizations/esi-apigee-x-394004/environments/eval/keyvaluemaps' -Method 'GET' -Headers $headers
     $kvmget | ConvertTo-Json
-    Write-Host $kvmget
+    # Write-Host $kvmget
 
     $url = "https://apigee.googleapis.com/v1/organizations/esi-apigee-x-394004/environments/eval/keyvaluemaps/$kvmName/entries"
 
@@ -49,22 +49,23 @@ foreach ($jsonFile in $jsonFiles) {
     $kvmgetentriesvalues | Format-Table
 
     $kvmList = Invoke-RestMethod 'https://apigee.googleapis.com/v1/organizations/esi-apigee-x-394004/environments/eval/keyvaluemaps' -Method 'GET' -Headers $headers
+    Write-Host "list: $kvmList"
 
     # Loop through each Key-Value Map and check if entries exist
     foreach ($kvm in $kvmList.keyValueMaps) {
-        $kvmName = $kvm.name
-    
-        # Get the list of entries for the current Key-Value Map
-        $entries = Invoke-RestMethod 'https://apigee.googleapis.com/v1/organizations/esi-apigee-x-394004/environments/eval/keyvaluemaps/$kvmName/entries' -Method 'GET' -Headers $headers
-    
-        # Check if entries exist for the current Key-Value Map
-        if ($entries.keyValueEntries.Count -gt 0) {
-            Write-Host "Entries exist for Key-Value Map: $kvmName"
-            # You can further process the entries here if needed
-        } else {
-            Write-Host "No entries found for Key-Value Map: $kvmName"
-        }
-    }
+      $kvmName = $kvm.name
+  
+      # Get the list of entries for the current Key-Value Map
+      $entries = Invoke-RestMethod 'https://apigee.googleapis.com/v1/organizations/esi-apigee-x-394004/environments/eval/keyvaluemaps/$kvmName/entries' -Method 'GET' -Headers $headers
+  
+      # Check if entries exist for the current Key-Value Map
+      if ($entries.keyValueEntries.Count -gt 0) {
+          Write-Host "Entries exist for Key-Value Map: $kvmName"
+          # You can further process the entries here if needed
+      } else {
+          Write-Host "No entries found for Key-Value Map: $kvmName"
+      }
+  }
 
     # Your array
     $array = $kvmget
