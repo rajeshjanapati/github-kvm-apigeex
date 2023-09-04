@@ -46,7 +46,7 @@ foreach ($jsonFile in $jsonFiles) {
     
     # Your JSON data as a PowerShell object
     $jsonData1 = @{
-        $kvmgetentriesvalues
+        "keyValueEntries" = $kvmgetentriesvalues
     }
     
     # Prompt the user for entry values to check (comma-separated)
