@@ -42,48 +42,27 @@ foreach ($jsonFile in $jsonFiles) {
 
     $kvmgetentries = Invoke-RestMethod -Uri $url -Method 'GET' -Headers $headers
     $kvmgetentriesvalues = $kvmgetentries | ConvertTo-Json
-    Write-Host $kvmgetentriesvalues
+    # Write-Host $kvmgetentriesvalues
     
     
     # Output the KVM entries for debugging
     $kvmgetentriesvalues | Format-Table
+
+    $kvmList = Invoke-RestMethod 'https://apigee.googleapis.com/v1/organizations/esi-apigee-x-394004/environments/eval/keyvaluemaps' -Method 'GET' -Headers $headers
+
+    # Loop through each Key-Value Map and check if entries exist
+    foreach ($kvm in $kvmList.keyValueMaps) {
+        $kvmName = $kvm.name
     
-    # Your JSON data as a PowerShell object
-    $jsonData1 = @{
-        "keyValueEntries" = $kvmgetentriesvalues.keyValueEntries
-    }
+        # Get the list of entries for the current Key-Value Map
+        $entries = Invoke-RestMethod 'https://apigee.googleapis.com/v1/organizations/esi-apigee-x-394004/environments/eval/keyvaluemaps/$kvmName/entries' -Method 'GET' -Headers $headers
     
-    # Prompt the user for entry values to check (comma-separated)
-    $entryValues = Read-Host "Enter the entry values to check (comma-separated)"
-    $valuesToCheck = $entryValues -split ',' | ForEach-Object { $_.Trim() }
-    
-    # Initialize an array to store the results
-    $results = @()
-    
-    # Check each value in the list
-    foreach ($valueToCheck in $valuesToCheck) {
-        Write-Host "step1..."
-        # Create an entry to check based on the current value
-        $entryToCheck = @{
-            "name" = $valueToCheck
-        }
-        
-        # Check if the entry exists in the array
-        $entryExists = $jsonData1.keyValueEntries -contains $entryToCheck
-    
-        # Add the result to the results array
-        $results += @{
-            "Value" = $valueToCheck
-            "Exists" = $entryExists
-        }
-    }
-    
-    # Output the results
-    $results | ForEach-Object {
-        if ($_.Exists) {
-            Write-Host "Entry with value $($_.Value) exists in the array."
+        # Check if entries exist for the current Key-Value Map
+        if ($entries.keyValueEntries.Count -gt 0) {
+            Write-Host "Entries exist for Key-Value Map: $kvmName"
+            # You can further process the entries here if needed
         } else {
-            Write-Host "Entry with value $($_.Value) does not exist in the array."
+            Write-Host "No entries found for Key-Value Map: $kvmName"
         }
     }
 
